@@ -1,0 +1,17 @@
+# Node modules
+node_modules/
+
+# Build artifacts
+dist/
+build/
+*.tgz
+
+# Ignore documentation (raw instruction files)
+.docs/
+
+# Environment variables
+.env
+
+
+# IDE files (e.g., VSCode)
+.vscode/
