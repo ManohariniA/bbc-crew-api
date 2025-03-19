@@ -1,34 +1,42 @@
 import request from 'supertest';
 import app from './server';
 
-describe('API Tests', () => {
-  it('should add a new show', async () => {
-    const res = await request(app)
-      .post('/shows')
-      .send({ name: 'The Office', budget: 500000 });
+describe('BBC API Endpoints', () => {
+    
+    test('GET / should return welcome message', async () => {
+        const res = await request(app).get('/');
+        expect(res.status).toBe(200);
+        expect(res.text).toBe('Welcome to the BBC API!');
+    });
 
-    expect(res.status).toBe(201);
-    expect(res.body).toHaveProperty('id');
-    expect(res.body.name).toBe('The Office');
-  });
+    test('GET /crew should return all crew members', async () => {
+        const res = await request(app).get('/crew');
+        expect(res.status).toBe(200);
+        expect(res.body).toBeInstanceOf(Array);
+    });
 
-  it('should return 400 for invalid show data', async () => {
-    const res = await request(app).post('/shows').send({ name: '' });
-    expect(res.status).toBe(400);
-  });
+    test('GET /shows should return all shows', async () => {
+        const res = await request(app).get('/shows');
+        expect(res.status).toBe(200);
+        expect(res.body).toBeInstanceOf(Array);
+    });
 
-  it('should add a crew member', async () => {
-    const showRes = await request(app)
-      .post('/shows')
-      .send({ name: 'Friends', budget: 1000000 });
+    test('GET /departments should return all departments', async () => {
+        const res = await request(app).get('/departments');
+        expect(res.status).toBe(200);
+        expect(res.body).toBeInstanceOf(Array);
+    });
 
-    const showId = showRes.body.id;
+    test('GET /crewMembers should return crew members by show', async () => {
+        const res = await request(app).get('/crewMembers?show=Fleabag');
+        expect(res.status).toBe(200);
+        expect(res.body).toBeInstanceOf(Array);
+    });
 
-    const crewRes = await request(app)
-      .post(`/shows/${showId}/crew`)
-      .send({ name: 'John Doe', department: 'Lighting' });
-
-    expect(crewRes.status).toBe(201);
-    expect(crewRes.body.name).toBe('John Doe');
-  });
+    test('GET /crewMembers/search should return crew members matching name', async () => {
+        const res = await request(app).get('/crewMembers/search?query=wizard');
+        expect(res.status).toBe(200);
+        expect(res.body).toBeInstanceOf(Array);
+    });
 });
+
