@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Show } from './models';
-import { parseCSV } from './csvparser';
+import { Show, CrewMember } from './models';
+import { crewMembers, parseCSV } from './csvparser';
 
 const shows: Show[] = [];
 
@@ -129,3 +129,26 @@ export const getCrewMembersByName = async (req: Request, res: Response): Promise
     res.status(500).json({ error: 'Failed to filter crew members' });
   }
 };
+
+// Add new crewMember
+export const addCrewMember = async (req: Request, res: Response): Promise<void> => {
+  try {
+  const crewMember: CrewMember = {
+    id: crewMembers.length + 1,
+    crewMemberName: req.body.crewMemberName,
+    department: req.body.department,
+    showName: req.body.showName,  
+    showBudget: req.body.showBudget
+  };
+  
+  crewMembers.push(crewMember);
+  console.log(crewMembers)
+
+  res.status(200).json(crewMember);
+
+} catch (error) {
+  console.error('Error filtering crew members:', error);
+  res.status(500).json({ error: 'Failed to filter crew members' });
+}
+};
+

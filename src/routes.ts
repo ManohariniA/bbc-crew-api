@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { getShows, getAllCrewMembers, getDepartments, getCrewMembersByShow, getCrewMembersByName } from './controllers';
+import { getShows, getAllCrewMembers, getDepartments, getCrewMembersByShow, addCrewMember, getCrewMembersByName } from './controllers';
 
 const router = express.Router();
 
@@ -25,6 +25,10 @@ router.get('/crewMembers', async (req: Request, res: Response): Promise<void> =>
 
 router.get('/crewMembers/search', async (req: Request, res: Response): Promise<void> => {
     await getCrewMembersByName(req, res);  
+  });
+  
+router.post('/addCrewMember', async (req: Request, res: Response): Promise<void> => {
+    await addCrewMember(req, res);  
   });   
 
 

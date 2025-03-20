@@ -1,9 +1,11 @@
 export interface CrewMember {
-    id: number;
-    name: string;
-    department: string;
-  }
-  
+  id: number;
+  crewMemberName: string;
+  department: string;
+  showName: string;
+  showBudget: number;
+}
+
 export interface Show {
     id: number;
     name: string;

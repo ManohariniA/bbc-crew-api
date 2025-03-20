@@ -1,14 +1,7 @@
 import fs from 'fs';
 import csvParser from 'csv-parser';
 import path from 'path';
-
-interface CrewMember {
-  id: number;
-  crewMemberName: string;
-  department: string;
-  showName: string;
-  showBudget: number;
-}
+import { CrewMember } from './models';
 
 let crewMembers: CrewMember[] = [];
 let nextCrewId = 1;
@@ -49,4 +42,4 @@ export const parseCSV = async (): Promise<CrewMember[]> => {
   });
 };
 
-export { crewMembers};
+export { crewMembers };
